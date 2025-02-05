@@ -1,3 +1,52 @@
 {
-    "tasks": []
-  }
+  "tasks": [
+    {
+      "id": 1,
+      "name": "Task 1",
+      "description": "Description 1",
+      "fecha_creacion": "04/02/2025",
+      "fecha_limite": "04/02/2025",
+      "completado": "true"
+    },
+    {
+      "id": 2,
+      "name": "Task 2",
+      "description": "Description 2",
+      "fecha_creacion": "04/02/2025",
+      "fecha_limite": "04/02/2025",
+      "completado": "false"
+    },
+    {
+      "id": 3,
+      "name": "Task 3",
+      "description": "Description 3",
+      "fecha_creacion": "04/02/2025",
+      "fecha_limite": "04/02/2025",
+      "completado": "true"
+    },
+    {
+      "id": 4,
+      "name": "Task 4",
+      "description": "Description 4",
+      "fecha_creacion": "04/02/2025",
+      "fecha_limite": "04/02/2025",
+      "completado": "false"
+    },
+    {
+      "id": 5,
+      "name": "Task 5",
+      "description": "Description 5",
+      "fecha_creacion": "04/02/2025",
+      "fecha_limite": "04/02/2025",
+      "completado": "true"
+    },
+    {
+      "id": 6,
+      "etiqueta": "Lavar los platos",
+      "descripcion": "Lavar platos vasos cubiertos",
+      "fecha_creacion": "2025-02-05",
+      "fecha_limite": "2025-01-28",
+      "completado": false
+    }
+  ]
+}
