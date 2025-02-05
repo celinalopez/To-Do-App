@@ -5,7 +5,7 @@
       "etiqueta": "Task 1",
       "descripcion": "descripcion 1",
       "fecha_limite": "2025-01-22",
-      "completado": true
+      "completado": false
     },
     {
       "id": 3,
@@ -19,7 +19,7 @@
       "etiqueta": "Task 4",
       "descripcion": "descripcion 4",
       "fecha_limite": "2025-01-12",
-      "completado": false
+      "completado": true
     },
     {
       "id": 5,
@@ -33,7 +33,7 @@
       "etiqueta": "Lavar los platos",
       "descripcion": "Lavar platos vasos cubiertos",
       "fecha_limite": "2025-01-28",
-      "completado": false
+      "completado": true
     },
     {
       "id": 6,

@@ -3,6 +3,8 @@ import fs from "fs";
 import cors from "cors";
 import bodyParser from "body-parser";
 import axios from "axios"; // Importamos Axios para obtener frases motivacionales
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
 
 const app = express();
 app.use(cors());
@@ -10,6 +12,25 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true })); // Para leer datos de formularios
 
 const FILE_PATH = "./tasks.json";
+
+// 📌 Configuración de Swagger
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "API de Tareas",
+            version: "1.0.0",
+            description: "Documentación de la API de gestión de tareas",
+        },
+    },
+    apis: ["./server.js"], // Rutas documentadas en este archivo
+};
+
+// 📌 Generar especificaciones Swagger
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
+
 
 // Clase Task
 class Task {
@@ -48,6 +69,18 @@ app.get("/", (req, res) => {
     `);
 });
 
+/**
+ * @swagger
+ * /tasks:
+ *   get:
+ *     summary: Obtener todas las tareas
+ *     description: Devuelve la lista de tareas organizadas por etiqueta.
+ *     responses:
+ *       200:
+ *         description: Lista de tareas obtenida correctamente
+ *       500:
+ *         description: Error en el servidor
+ */
 // 📌 GET: Ver tareas organizadas por etiqueta y fecha límite
 app.get("/tasks", (req, res) => {
     const data = readTasks();
@@ -90,6 +123,25 @@ app.get("/tasks", (req, res) => {
     res.send(taskHtml);
 });
 
+/**
+ * @swagger
+ * /tasks/complete/{id}:
+ *   post:
+ *     summary: Marcar una tarea como completada y obtener frase motivacional
+ *     description: Cambia el estado de una tarea a completada y obtiene una frase de ZenQuotes.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID de la tarea a completar
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Tarea completada y frase motivacional obtenida
+ *       404:
+ *         description: Tarea no encontrada
+ */
 // 📌 POST: Marcar tarea como completada y obtener frase motivacional
 app.post("/tasks/complete/:id", async (req, res) => {
     const data = readTasks();
@@ -129,6 +181,35 @@ app.post("/tasks/complete/:id", async (req, res) => {
 });
 
 
+/**
+ * @swagger
+ * /tasks:
+ *   post:
+ *     summary: Agregar una nueva tarea
+ *     description: Crea una nueva tarea y la almacena en JSON.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               etiqueta:
+ *                 type: string
+ *                 example: "Trabajo"
+ *               descripcion:
+ *                 type: string
+ *                 example: "Hacer informe mensual"
+ *               fecha_limite:
+ *                 type: string
+ *                 format: date
+ *                 example: "2024-02-10"
+ *     responses:
+ *       201:
+ *         description: Tarea creada correctamente
+ *       400:
+ *         description: Faltan datos en la solicitud
+ */
 
 // 📌 GET: Formulario para agregar tarea
 app.get("/add-task", (req, res) => {
@@ -218,6 +299,28 @@ app.get("/delete-task", (req, res) => {
     `);
 });
 
+/**
+ * @swagger
+ * /tasks/delete:
+ *   post:
+ *     summary: Eliminar una tarea
+ *     description: Elimina una tarea existente por ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 1
+ *     responses:
+ *       200:
+ *         description: Tarea eliminada correctamente
+ *       404:
+ *         description: Tarea no encontrada
+ */
 // 📌 POST: Eliminar tarea
 app.post("/tasks/delete", (req, res) => {
     const data = readTasks();
