@@ -30,13 +30,6 @@
     },
     {
       "id": 6,
-      "etiqueta": "Lavar los platos",
-      "descripcion": "Lavar platos vasos cubiertos",
-      "fecha_limite": "2025-01-28",
-      "completado": true
-    },
-    {
-      "id": 6,
       "etiqueta": "Alimentar Gato",
       "descripcion": "30gr alimento",
       "fecha_limite": "2025-02-06",

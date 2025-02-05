@@ -242,11 +242,14 @@ app.post("/tasks", (req, res) => {
         return res.status(400).send("<h2>Todos los campos son obligatorios.</h2><a href='/add-task'>Volver</a>");
     }
 
+    // 📌 Encontrar el ID más alto y sumarle 1
+    const maxId = data.tasks.length > 0 ? Math.max(...data.tasks.map(task => task.id)) : 0;
     const newTask = new Task(
-        data.tasks.length + 1,
+        maxId + 1,  // ✅ Ahora el ID es único
         etiqueta,
         descripcion,
-        fecha_limite
+        fecha_limite,
+        false
     );
 
     data.tasks.push(newTask);
