@@ -36,6 +36,12 @@ const writeTasks = (data) => {
 };
 
 
+// GET
+app.get("/tasks", (req, res) => {
+    const data = readTasks();
+    res.json(data.tasks);
+});
+
 
 
 // Iniciar el servidor
