@@ -42,6 +42,24 @@ app.get("/tasks", (req, res) => {
     res.json(data.tasks);
 });
 
+// POST
+app.post("/tasks", (req, res) => {
+    const data = readTasks();
+    const { etiqueta, descripcion, fecha_limite } = req.body;
+    const newTask = new Task(
+        data.tasks.length + 1,
+        etiqueta,
+        descripcion,
+        new Date().toISOString().split("T")[0], // Fecha de creación automática
+        fecha_limite
+    );
+
+    data.tasks.push(newTask);
+    writeTasks(data);
+    res.status(201).json(newTask);
+});
+
+
 
 
 // Iniciar el servidor
