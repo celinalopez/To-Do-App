@@ -59,6 +59,23 @@ app.post("/tasks", (req, res) => {
     res.status(201).json(newTask);
 });
 
+// PUT
+app.put("/tasks/:id", (req, res) => {
+    const data = readTasks();
+    const id = parseInt(req.params.id);
+    const taskIndex = data.tasks.findIndex(task => task.id === id);
+
+    if (taskIndex === -1) {
+        return res.status(404).json({ error: "Tarea no encontrada" });
+    }
+
+    data.tasks[taskIndex] = { ...data.tasks[taskIndex], ...req.body };
+    writeTasks(data);
+    res.json({ message: "Tarea actualizada", updatedTask: data.tasks[taskIndex] });
+});
+
+
+
 
 
 
