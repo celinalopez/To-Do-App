@@ -91,9 +91,5 @@ async function fetchMotivationalQuote() {
 }
 
 
-
-
-
-
 // Cargar tareas al inicio
 fetchTasks();

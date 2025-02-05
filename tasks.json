@@ -2,43 +2,43 @@
   "tasks": [
     {
       "id": 1,
-      "name": "Task 1",
-      "description": "Description 1",
+      "etiqueta": "Task 1",
+      "descripcion": "descripcion 1",
       "fecha_creacion": "04/02/2025",
-      "fecha_limite": "04/02/2025",
-      "completado": "true"
+      "fecha_limite": "2025-01-22",
+      "completado": true
     },
     {
       "id": 2,
-      "name": "Task 2",
-      "description": "Description 2",
+      "etiqueta": "Task 2",
+      "descripcion": "descripcion 2",
       "fecha_creacion": "04/02/2025",
-      "fecha_limite": "04/02/2025",
-      "completado": "false"
+      "fecha_limite": "2025-01-04",
+      "completado": false
     },
     {
       "id": 3,
-      "name": "Task 3",
-      "description": "Description 3",
+      "etiqueta": "Task 3",
+      "descripcion": "descripcion 3",
       "fecha_creacion": "04/02/2025",
-      "fecha_limite": "04/02/2025",
-      "completado": "true"
+      "fecha_limite": "2025-01-02",
+      "completado": true
     },
     {
       "id": 4,
-      "name": "Task 4",
-      "description": "Description 4",
+      "etiqueta": "Task 4",
+      "descripcion": "descripcion 4",
       "fecha_creacion": "04/02/2025",
-      "fecha_limite": "04/02/2025",
-      "completado": "false"
+      "fecha_limite": "2025-01-12",
+      "completado": false
     },
     {
       "id": 5,
-      "name": "Task 5",
-      "description": "Description 5",
+      "etiqueta": "Task 5",
+      "descripcion": "descripcion 5",
       "fecha_creacion": "04/02/2025",
-      "fecha_limite": "04/02/2025",
-      "completado": "true"
+      "fecha_limite": "2025-01-09",
+      "completado": true
     },
     {
       "id": 6,
