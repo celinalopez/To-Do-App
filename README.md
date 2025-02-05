@@ -12,3 +12,7 @@ npm install
 3️⃣ Ejecutar el servidor
 
 node server.js
+
+4️⃣ Acceder a la documentación Swagger
+
+http://localhost:3000/api-docs
