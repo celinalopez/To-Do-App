@@ -35,6 +35,25 @@ function renderTasks(tasks) {
         taskListElement.appendChild(li);
     });
 }
+// Agregar nueva tarea
+async function addTask() {
+    const etiqueta = prompt("Etiqueta de la tarea:");
+    const descripcion = prompt("Descripción de la tarea:");
+    const fecha_limite = prompt("Fecha límite (YYYY-MM-DD):");
+
+    if (!etiqueta || !descripcion || !fecha_limite) return;
+
+    const newTask = { etiqueta, descripcion, fecha_limite };
+
+    await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask)
+    });
+
+    fetchTasks();
+}
+
 
 
 
