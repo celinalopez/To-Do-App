@@ -1,7 +1,7 @@
 # To-Do-App
 1️⃣ Clonar el proyecto
 
-git clone https://github.com/usuario/to-do-api.git
+git clone https://github.com/celinalopez/To-Do-App.git
 
 cd to-do-api
 
