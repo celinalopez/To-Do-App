@@ -33,7 +33,7 @@
       "etiqueta": "Alimentar Gato",
       "descripcion": "30gr alimento",
       "fecha_limite": "2025-02-06",
-      "completado": false
+      "completado": true
     }
   ]
 }

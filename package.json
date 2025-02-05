@@ -4,7 +4,8 @@
   "description": "Node JS - To Do App",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "node": "node server.js"
   },
   "repository": {
     "type": "git",
