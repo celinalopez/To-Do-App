@@ -4,7 +4,6 @@
       "id": 1,
       "etiqueta": "Task 1",
       "descripcion": "descripcion 1",
-      "fecha_creacion": "04/02/2025",
       "fecha_limite": "2025-01-22",
       "completado": true
     },
@@ -12,7 +11,6 @@
       "id": 3,
       "etiqueta": "Task 3",
       "descripcion": "descripcion 3",
-      "fecha_creacion": "04/02/2025",
       "fecha_limite": "2025-01-02",
       "completado": true
     },
@@ -20,7 +18,6 @@
       "id": 4,
       "etiqueta": "Task 4",
       "descripcion": "descripcion 4",
-      "fecha_creacion": "04/02/2025",
       "fecha_limite": "2025-01-12",
       "completado": false
     },
@@ -28,16 +25,21 @@
       "id": 5,
       "etiqueta": "Task 5",
       "descripcion": "descripcion 5",
-      "fecha_creacion": "04/02/2025",
       "fecha_limite": "2025-01-09",
-      "completado": true
+      "completado": false
     },
     {
       "id": 6,
       "etiqueta": "Lavar los platos",
       "descripcion": "Lavar platos vasos cubiertos",
-      "fecha_creacion": "2025-02-05",
       "fecha_limite": "2025-01-28",
+      "completado": false
+    },
+    {
+      "id": 6,
+      "etiqueta": "nueva tarea",
+      "descripcion": "tarea prueba",
+      "fecha_limite": "2025-02-03",
       "completado": false
     }
   ]

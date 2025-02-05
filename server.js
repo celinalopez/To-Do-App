@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import cors from "cors";
 import bodyParser from "body-parser";
+import axios from "axios"; // Importamos Axios para obtener frases motivacionales
 
 const app = express();
 app.use(cors());
@@ -10,19 +11,18 @@ app.use(bodyParser.urlencoded({ extended: true })); // Para leer datos de formul
 
 const FILE_PATH = "./tasks.json";
 
-// 📌 Clase Task
+// Clase Task
 class Task {
-    constructor(id, etiqueta, descripcion, fecha_creacion, fecha_limite, completado = false) {
+    constructor(id, etiqueta, descripcion, fecha_limite, completado = false) {
         this.id = id;
         this.etiqueta = etiqueta;
         this.descripcion = descripcion;
-        this.fecha_creacion = fecha_creacion;
         this.fecha_limite = fecha_limite;
         this.completado = completado;
     }
 }
 
-// 📌 Leer tareas desde JSON
+// Leer tareas desde JSON
 const readTasks = () => {
     try {
         const data = fs.readFileSync(FILE_PATH, "utf-8");
@@ -32,7 +32,7 @@ const readTasks = () => {
     }
 };
 
-// 📌 Guardar tareas en JSON
+// Guardar tareas en JSON
 const writeTasks = (data) => {
     fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
 };
@@ -90,8 +90,8 @@ app.get("/tasks", (req, res) => {
     res.send(taskHtml);
 });
 
-// 📌 POST: Marcar tarea como completada
-app.post("/tasks/complete/:id", (req, res) => {
+// 📌 POST: Marcar tarea como completada y obtener frase motivacional
+app.post("/tasks/complete/:id", async (req, res) => {
     const data = readTasks();
     const id = parseInt(req.params.id);
     const taskIndex = data.tasks.findIndex(task => task.id === id);
@@ -102,9 +102,33 @@ app.post("/tasks/complete/:id", (req, res) => {
 
     data.tasks[taskIndex].completado = true;
     writeTasks(data);
-    
-    res.redirect("/tasks"); // Redirigir de nuevo a la lista de tareas
+
+    try {
+        // 📌 Obtener frase motivacional con Axios
+        const response = await axios.get("https://zenquotes.io/api/random");
+        const frase = response.data[0].q;
+        const autor = response.data[0].a;
+
+        // 📌 Enviar alerta con la frase y redirigir al usuario
+        res.send(`
+            <script>
+                alert("✅ Tarea completada!\\n\\nFrase motivacional:\\n\\"${frase}\\" - ${autor}");
+                window.location.href = "/tasks";
+            </script>
+        `);
+    } catch (error) {
+        console.error("Error al obtener la frase:", error);
+
+        res.send(`
+            <script>
+                alert("✅ Tarea completada!\\n\\nNo se pudo obtener la frase motivacional.");
+                window.location.href = "/tasks";
+            </script>
+        `);
+    }
 });
+
+
 
 // 📌 GET: Formulario para agregar tarea
 app.get("/add-task", (req, res) => {
@@ -148,6 +172,7 @@ app.get("/update-task", (req, res) => {
         <h2>Actualizar Tarea</h2>
         <form action="/tasks/update" method="post">
             <input type="number" name="id" placeholder="ID de la tarea" required><br>
+            <input type="text" name="etiqueta" placeholder="Nueva Etiqueta"><br>
             <input type="text" name="descripcion" placeholder="Nueva Descripción"><br>
             <input type="date" name="fecha_limite"><br>
             <button type="submit">Actualizar</button>
