@@ -273,6 +273,40 @@ app.get("/update-task", (req, res) => {
     `);
 });
 
+/**
+ * @swagger
+ * /tasks/update:
+ *   post:
+ *     summary: Actualizar una tarea existente
+ *     description: Modifica los datos de una tarea según el ID proporcionado.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 1
+ *               etiqueta:
+ *                 type: string
+ *                 example: "Trabajo"
+ *               descripcion:
+ *                 type: string
+ *                 example: "Preparar presentación"
+ *               fecha_limite:
+ *                 type: string
+ *                 format: date
+ *                 example: "2024-02-20"
+ *     responses:
+ *       200:
+ *         description: Tarea actualizada correctamente
+ *       400:
+ *         description: No se enviaron datos para actualizar
+ *       404:
+ *         description: Tarea no encontrada
+ */
 
 // POST: ACTUALIZAR TASK
 app.post("/tasks/update", (req, res) => {
@@ -285,6 +319,9 @@ app.post("/tasks/update", (req, res) => {
     }
 
     // Si se envían nuevos valores, actualizarlos
+    if (req.body.etiqueta) {
+        data.tasks[taskIndex].etiqueta = req.body.etiqueta;
+    }
     if (req.body.descripcion) {
         data.tasks[taskIndex].descripcion = req.body.descripcion;
     }
@@ -295,6 +332,7 @@ app.post("/tasks/update", (req, res) => {
     writeTasks(data);
     res.redirect("/tasks");
 });
+
 //#endregion
 //#region Eliminar tarea
 // GET: Formulario ELIMINAR TASK
