@@ -15,4 +15,4 @@ node server.js
 
 4️⃣ Acceder a la documentación Swagger
 
-http://localhost:3000/api-docs
+http://localhost:3000/swagger
