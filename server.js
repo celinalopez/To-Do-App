@@ -142,6 +142,23 @@ app.post("/tasks", (req, res) => {
     res.redirect("/tasks");
 });
 
+// 📌 GET: Formulario para actualizar tarea
+app.get("/update-task", (req, res) => {
+    res.send(`
+        <h2>Actualizar Tarea</h2>
+        <form action="/tasks/update" method="post">
+            <input type="number" name="id" placeholder="ID de la tarea" required><br>
+            <input type="text" name="descripcion" placeholder="Nueva Descripción"><br>
+            <input type="date" name="fecha_limite"><br>
+            <button type="submit">Actualizar</button>
+        </form>
+        <a href="/">🔙 Volver</a>
+    `);
+});
+
+
+
+
 // 📌 POST: Editar tarea
 app.post("/tasks/update", (req, res) => {
     const data = readTasks();
@@ -162,6 +179,18 @@ app.post("/tasks/update", (req, res) => {
 
     writeTasks(data);
     res.redirect("/tasks");
+});
+
+// 📌 GET: Formulario para eliminar tarea
+app.get("/delete-task", (req, res) => {
+    res.send(`
+        <h2>Eliminar Tarea</h2>
+        <form action="/tasks/delete" method="post">
+            <input type="number" name="id" placeholder="ID de la tarea" required><br>
+            <button type="submit">Eliminar</button>
+        </form>
+        <a href="/">🔙 Volver</a>
+    `);
 });
 
 // 📌 POST: Eliminar tarea

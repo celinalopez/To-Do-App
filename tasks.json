@@ -9,14 +9,6 @@
       "completado": true
     },
     {
-      "id": 2,
-      "etiqueta": "Task 2",
-      "descripcion": "descripcion 2",
-      "fecha_creacion": "04/02/2025",
-      "fecha_limite": "2025-01-04",
-      "completado": false
-    },
-    {
       "id": 3,
       "etiqueta": "Task 3",
       "descripcion": "descripcion 3",
