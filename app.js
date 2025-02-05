@@ -54,6 +54,26 @@ async function addTask() {
     fetchTasks();
 }
 
+// Marcar una tarea como completada
+async function toggleTask(id) {
+    const response = await fetch(`http://localhost:3000/tasks`);
+    const tasks = await response.json();
+    const task = tasks.find(t => t.id === id);
+    task.completado = !task.completado;
+
+    await fetch(`http://localhost:3000/tasks/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task)
+    });
+
+    fetchTasks();
+    if (task.completado) {
+        fetchMotivationalQuote();
+    }
+}
+
+
 
 
 
