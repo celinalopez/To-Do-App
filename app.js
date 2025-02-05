@@ -26,7 +26,7 @@ const swaggerOptions = {
     apis: ["./server.js"], // Rutas documentadas en este archivo
 };
 
-// 📌 Generar especificaciones Swagger
+// Generar especificaciones Swagger
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 //#endregion
