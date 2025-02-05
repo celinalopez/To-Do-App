@@ -9,11 +9,11 @@ import swaggerUI from "swagger-ui-express";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true })); // Para leer datos de formularios
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 const FILE_PATH = "./tasks.json";
 
-// 📌 Configuración de Swagger
+//#region Swagger
 const swaggerOptions = {
     definition: {
         openapi: "3.0.0",
@@ -29,7 +29,7 @@ const swaggerOptions = {
 // 📌 Generar especificaciones Swagger
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-
+//#endregion
 
 
 // Clase Task
@@ -42,6 +42,8 @@ class Task {
         this.completado = completado;
     }
 }
+
+//#region Funciones
 
 // Leer tareas desde JSON
 const readTasks = () => {
@@ -58,17 +60,22 @@ const writeTasks = (data) => {
     fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
 };
 
-// 📌 Página principal
+//#endregion
+
+//#region RUTAS
+
+// Página principal
 app.get("/", (req, res) => {
     res.send(`
-        <h1>Bienvenido a la API de Tareas 📝</h1>
-        <button onclick="window.location.href='/tasks'">📋 Ver Tareas</button>
-        <button onclick="window.location.href='/add-task'">➕ Agregar Tarea</button>
-        <button onclick="window.location.href='/update-task'">✏️ Editar Tarea</button>
-        <button onclick="window.location.href='/delete-task'">🗑️ Eliminar Tarea</button>
+        <h1>To Do App</h1>
+        <button onclick="window.location.href='/tasks'">Ver Tareas</button>
+        <button onclick="window.location.href='/add-task'">Agregar Tarea</button>
+        <button onclick="window.location.href='/update-task'">Editar Tarea</button>
+        <button onclick="window.location.href='/delete-task'">Eliminar Tarea</button>
     `);
 });
 
+//#region Ver tareas
 /**
  * @swagger
  * /tasks:
@@ -81,7 +88,7 @@ app.get("/", (req, res) => {
  *       500:
  *         description: Error en el servidor
  */
-// 📌 GET: Ver tareas organizadas por etiqueta y fecha límite
+//GET: VER TAREAS
 app.get("/tasks", (req, res) => {
     const data = readTasks();
 
@@ -89,7 +96,7 @@ app.get("/tasks", (req, res) => {
         return res.send("<h2>No hay tareas registradas.</h2><a href='/'>🔙 Volver</a>");
     }
 
-    // 📌 Organizar tareas por etiqueta
+    //Organizar tareas por etiqueta
     let groupedTasks = {};
     data.tasks.forEach(task => {
         if (!groupedTasks[task.etiqueta]) {
@@ -98,8 +105,8 @@ app.get("/tasks", (req, res) => {
         groupedTasks[task.etiqueta].push(task);
     });
 
-    // 📌 Generar HTML con botones de completar solo si no está completada
-    let taskHtml = "<h1>Lista de Tareas 📋</h1>";
+    //Generar HTML con botones de completar solo si la task no esta completada
+    let taskHtml = "<h1>Lista de Tareas</h1>";
     for (let etiqueta in groupedTasks) {
         taskHtml += `<h2>${etiqueta}</h2><ul>`;
         groupedTasks[etiqueta].forEach(task => {
@@ -123,6 +130,7 @@ app.get("/tasks", (req, res) => {
     res.send(taskHtml);
 });
 
+//#region Completar tarea
 /**
  * @swagger
  * /tasks/complete/{id}:
@@ -142,7 +150,7 @@ app.get("/tasks", (req, res) => {
  *       404:
  *         description: Tarea no encontrada
  */
-// 📌 POST: Marcar tarea como completada y obtener frase motivacional
+// POST: Marcar tarea como completada y obtener frase motivacional
 app.post("/tasks/complete/:id", async (req, res) => {
     const data = readTasks();
     const id = parseInt(req.params.id);
@@ -156,15 +164,15 @@ app.post("/tasks/complete/:id", async (req, res) => {
     writeTasks(data);
 
     try {
-        // 📌 Obtener frase motivacional con Axios
+        // Obtener frase motivacional con Axios
         const response = await axios.get("https://zenquotes.io/api/random");
         const frase = response.data[0].q;
         const autor = response.data[0].a;
 
-        // 📌 Enviar alerta con la frase y redirigir al usuario
+        // Enviar alerta con la frase y redirigir al usuario
         res.send(`
             <script>
-                alert("✅ Tarea completada!\\n\\nFrase motivacional:\\n\\"${frase}\\" - ${autor}");
+                alert("Tarea completada!\\n\\nFrase motivacional:\\n\\"${frase}\\" - ${autor}");
                 window.location.href = "/tasks";
             </script>
         `);
@@ -173,14 +181,14 @@ app.post("/tasks/complete/:id", async (req, res) => {
 
         res.send(`
             <script>
-                alert("✅ Tarea completada!\\n\\nNo se pudo obtener la frase motivacional.");
+                alert("Tarea completada!\\n\\nNo se pudo obtener la frase motivacional.");
                 window.location.href = "/tasks";
             </script>
         `);
     }
 });
 
-
+//#region Add tarea
 /**
  * @swagger
  * /tasks:
@@ -211,7 +219,7 @@ app.post("/tasks/complete/:id", async (req, res) => {
  *         description: Faltan datos en la solicitud
  */
 
-// 📌 GET: Formulario para agregar tarea
+// GET: Formulario AGREGAR TASK
 app.get("/add-task", (req, res) => {
     res.send(`
         <h2>Agregar Nueva Tarea</h2>
@@ -221,17 +229,17 @@ app.get("/add-task", (req, res) => {
             <input type="date" name="fecha_limite" required><br>
             <button type="submit">Agregar</button>
         </form>
-        <a href="/">🔙 Volver</a>
+        <a href="/">Volver</a>
     `);
 });
 
-// 📌 POST: Agregar nueva tarea
+// POST: AGREGAR TASK
 app.post("/tasks", (req, res) => {
     const data = readTasks();
     const { etiqueta, descripcion, fecha_limite } = req.body;
 
     if (!etiqueta || !descripcion || !fecha_limite) {
-        return res.status(400).send("<h2>Todos los campos son obligatorios.</h2><a href='/add-task'>🔙 Volver</a>");
+        return res.status(400).send("<h2>Todos los campos son obligatorios.</h2><a href='/add-task'>Volver</a>");
     }
 
     const newTask = new Task(
@@ -247,7 +255,8 @@ app.post("/tasks", (req, res) => {
     res.redirect("/tasks");
 });
 
-// 📌 GET: Formulario para actualizar tarea
+//#region Actualizar tarea
+// GET: Formulario ACTUALIZAR TASK
 app.get("/update-task", (req, res) => {
     res.send(`
         <h2>Actualizar Tarea</h2>
@@ -258,21 +267,19 @@ app.get("/update-task", (req, res) => {
             <input type="date" name="fecha_limite"><br>
             <button type="submit">Actualizar</button>
         </form>
-        <a href="/">🔙 Volver</a>
+        <a href="/">Volver</a>
     `);
 });
 
 
-
-
-// 📌 POST: Editar tarea
+// POST: ACTUALIZAR TASK
 app.post("/tasks/update", (req, res) => {
     const data = readTasks();
     const id = parseInt(req.body.id);
     const taskIndex = data.tasks.findIndex(task => task.id === id);
 
     if (taskIndex === -1) {
-        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/update-task'>🔙 Volver</a>");
+        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/update-task'>Volver</a>");
     }
 
     // Si se envían nuevos valores, actualizarlos
@@ -286,8 +293,9 @@ app.post("/tasks/update", (req, res) => {
     writeTasks(data);
     res.redirect("/tasks");
 });
-
-// 📌 GET: Formulario para eliminar tarea
+//#endregion
+//#region Eliminar tarea
+// GET: Formulario ELIMINAR TASK
 app.get("/delete-task", (req, res) => {
     res.send(`
         <h2>Eliminar Tarea</h2>
@@ -295,7 +303,7 @@ app.get("/delete-task", (req, res) => {
             <input type="number" name="id" placeholder="ID de la tarea" required><br>
             <button type="submit">Eliminar</button>
         </form>
-        <a href="/">🔙 Volver</a>
+        <a href="/">Volver</a>
     `);
 });
 
@@ -321,19 +329,19 @@ app.get("/delete-task", (req, res) => {
  *       404:
  *         description: Tarea no encontrada
  */
-// 📌 POST: Eliminar tarea
+// POST: ELIMINAR TASK
 app.post("/tasks/delete", (req, res) => {
     const data = readTasks();
     const id = parseInt(req.body.id);
     const filteredTasks = data.tasks.filter(task => task.id !== id);
 
     if (filteredTasks.length === data.tasks.length) {
-        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/delete-task'>🔙 Volver</a>");
+        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/delete-task'>Volver</a>");
     }
 
     writeTasks({ tasks: filteredTasks });
     res.redirect("/tasks");
 });
-
-// 📌 Iniciar servidor
-app.listen(3000, () => console.log("✅ Servidor corriendo en http://localhost:3000"));
+//#endregion
+// Iniciar servidor
+app.listen(3000, () => console.log("Servidor corriendo en http://localhost:3000"));
