@@ -20,6 +20,23 @@ async function fetchTasks() {
     renderTasks(tasks);
 }
 
+// Renderizar tareas en la interfaz
+function renderTasks(tasks) {
+    taskListElement.innerHTML = "";
+    tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <span class="${task.completado ? 'completed' : ''}">
+                [${task.etiqueta}] ${task.descripcion} (Vence: ${task.fecha_limite})
+            </span>
+            <button onclick="toggleTask(${task.id})">✔</button>
+            <button onclick="deleteTask(${task.id})">❌</button>
+        `;
+        taskListElement.appendChild(li);
+    });
+}
+
+
 
 
 // Cargar tareas al inicio
