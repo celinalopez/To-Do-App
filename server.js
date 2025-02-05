@@ -43,6 +43,8 @@ app.get("/", (req, res) => {
         <h1>Bienvenido a la API de Tareas 📝</h1>
         <button onclick="window.location.href='/tasks'">📋 Ver Tareas</button>
         <button onclick="window.location.href='/add-task'">➕ Agregar Tarea</button>
+        <button onclick="window.location.href='/update-task'">✏️ Editar Tarea</button>
+        <button onclick="window.location.href='/delete-task'">🗑️ Eliminar Tarea</button>
     `);
 });
 
@@ -137,6 +139,42 @@ app.post("/tasks", (req, res) => {
 
     data.tasks.push(newTask);
     writeTasks(data);
+    res.redirect("/tasks");
+});
+
+// 📌 POST: Editar tarea
+app.post("/tasks/update", (req, res) => {
+    const data = readTasks();
+    const id = parseInt(req.body.id);
+    const taskIndex = data.tasks.findIndex(task => task.id === id);
+
+    if (taskIndex === -1) {
+        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/update-task'>🔙 Volver</a>");
+    }
+
+    // Si se envían nuevos valores, actualizarlos
+    if (req.body.descripcion) {
+        data.tasks[taskIndex].descripcion = req.body.descripcion;
+    }
+    if (req.body.fecha_limite) {
+        data.tasks[taskIndex].fecha_limite = req.body.fecha_limite;
+    }
+
+    writeTasks(data);
+    res.redirect("/tasks");
+});
+
+// 📌 POST: Eliminar tarea
+app.post("/tasks/delete", (req, res) => {
+    const data = readTasks();
+    const id = parseInt(req.body.id);
+    const filteredTasks = data.tasks.filter(task => task.id !== id);
+
+    if (filteredTasks.length === data.tasks.length) {
+        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/delete-task'>🔙 Volver</a>");
+    }
+
+    writeTasks({ tasks: filteredTasks });
     res.redirect("/tasks");
 });
 
