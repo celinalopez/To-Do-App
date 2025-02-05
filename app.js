@@ -73,6 +73,23 @@ async function toggleTask(id) {
     }
 }
 
+// Eliminar una tarea
+async function deleteTask(id) {
+    await fetch(`http://localhost:3000/tasks/${id}`, { method: "DELETE" });
+    fetchTasks();
+}
+
+// Obtener frase motivacional
+async function fetchMotivationalQuote() {
+    try {
+        const response = await fetch("https://zenquotes.io/api/random");
+        const data = await response.json();
+        quoteText.innerText = `"${data[0].q}" - ${data[0].a}`;
+    } catch (error) {
+        quoteText.innerText = "Error al obtener la frase.";
+    }
+}
+
 
 
 
