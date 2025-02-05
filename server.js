@@ -37,6 +37,11 @@ const writeTasks = (data) => {
 
 
 // GET
+app.get("/", (req, res) => {
+    const data = readTasks();
+    res.json("Bienvenido a la API de tareas");
+});
+
 app.get("/tasks", (req, res) => {
     const data = readTasks();
     res.json(data.tasks);
@@ -92,4 +97,4 @@ app.delete("/tasks/:id", (req, res) => {
 
 
 // Iniciar el servidor
-app.listen(3000, () => console.log("✅ Servidor corriendo en http://localhost:3000"));
+app.listen(3000, () => console.log("Servidor corriendo en http://localhost:3000"));
