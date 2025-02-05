@@ -26,7 +26,7 @@
       "etiqueta": "Task 5",
       "descripcion": "descripcion 5",
       "fecha_limite": "2025-01-09",
-      "completado": false
+      "completado": true
     },
     {
       "id": 6,
@@ -37,9 +37,9 @@
     },
     {
       "id": 6,
-      "etiqueta": "nueva tarea",
-      "descripcion": "tarea prueba",
-      "fecha_limite": "2025-02-03",
+      "etiqueta": "Alimentar Gato",
+      "descripcion": "30gr alimento",
+      "fecha_limite": "2025-02-06",
       "completado": false
     }
   ]

@@ -246,7 +246,6 @@ app.post("/tasks", (req, res) => {
         data.tasks.length + 1,
         etiqueta,
         descripcion,
-        new Date().toISOString().split("T")[0], // Fecha de creación automática
         fecha_limite
     );
 
