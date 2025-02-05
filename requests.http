@@ -1,0 +1,30 @@
+GET http://localhost:3000/tasks HTTP/1.1
+###
+GET http://localhost:3000/tasks/2 HTTP/1.1
+###
+POST http://localhost:3000/tasks HTTP/1.1
+Content-Type: application/json
+
+{
+    "etiqueta": "Alimentar al gato",
+    "descripcion": "30 gramos de comida para gato",
+    "fecha_creacion": "04/02/2025",
+    "fecha_limite": "04/02/2025",
+    "completado": false
+}
+
+###
+PUT http://localhost:3000/tasks/3 HTTP/1.1
+Content-Type: application/json
+
+{ 
+    "etiqueta": "Alimentar al gato",
+    "descripcion": "30 gramos de comida para gato",
+    "fecha_creacion": "04/02/2025",
+    "fecha_limite": "04/02/2025",
+    "completado": true
+}
+
+###
+DELETE http://localhost:3000/tasks/2 HTTP/1.1
+
