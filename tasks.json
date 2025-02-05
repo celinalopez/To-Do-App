@@ -5,7 +5,7 @@
       "etiqueta": "Task 1",
       "descripcion": "descripcion 1",
       "fecha_limite": "2025-01-22",
-      "completado": false
+      "completado": true
     },
     {
       "id": 3,
@@ -33,6 +33,13 @@
       "etiqueta": "Alimentar Gato",
       "descripcion": "30gr alimento",
       "fecha_limite": "2025-02-06",
+      "completado": true
+    },
+    {
+      "id": 7,
+      "etiqueta": "Alimentar al gato",
+      "descripcion": "30 gramos de comida para gato",
+      "fecha_limite": "04/02/2025",
       "completado": true
     }
   ]

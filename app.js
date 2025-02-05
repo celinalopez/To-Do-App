@@ -93,7 +93,7 @@ app.get("/tasks", (req, res) => {
     const data = readTasks();
 
     if (data.tasks.length === 0) {
-        return res.send("<h2>No hay tareas registradas.</h2><a href='/'>🔙 Volver</a>");
+        return res.send("<h2>No hay tareas registradas.</h2><a href='/'>Volver</a>");
     }
 
     //Organizar tareas por etiqueta
@@ -157,7 +157,7 @@ app.post("/tasks/complete/:id", async (req, res) => {
     const taskIndex = data.tasks.findIndex(task => task.id === id);
 
     if (taskIndex === -1) {
-        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/tasks'>🔙 Volver</a>");
+        return res.status(404).send("<h2>Tarea no encontrada.</h2><a href='/tasks'>Volver</a>");
     }
 
     data.tasks[taskIndex].completado = true;
@@ -242,10 +242,10 @@ app.post("/tasks", (req, res) => {
         return res.status(400).send("<h2>Todos los campos son obligatorios.</h2><a href='/add-task'>Volver</a>");
     }
 
-    // 📌 Encontrar el ID más alto y sumarle 1
+    //Encontrar el ID más alto y sumarle 1
     const maxId = data.tasks.length > 0 ? Math.max(...data.tasks.map(task => task.id)) : 0;
     const newTask = new Task(
-        maxId + 1,  // ✅ Ahora el ID es único
+        maxId + 1, 
         etiqueta,
         descripcion,
         fecha_limite,
