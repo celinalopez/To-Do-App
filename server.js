@@ -20,6 +20,23 @@ class Task {
     }
 }
 
+// Funcion para leer tareas
+const readTasks = () => {
+    try {
+        const data = fs.readFileSync(FILE_PATH, "utf-8");
+        return JSON.parse(data);
+    } catch (error) {
+        return { tasks: [] };
+    }
+};
 
-// 📌 Iniciar el servidor
+//  Funcion para escribir tareas
+const writeTasks = (data) => {
+    fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
+};
+
+
+
+
+// Iniciar el servidor
 app.listen(3000, () => console.log("✅ Servidor corriendo en http://localhost:3000"));
