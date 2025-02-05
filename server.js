@@ -74,7 +74,19 @@ app.put("/tasks/:id", (req, res) => {
     res.json({ message: "Tarea actualizada", updatedTask: data.tasks[taskIndex] });
 });
 
+// DELETE
+app.delete("/tasks/:id", (req, res) => {
+    const data = readTasks();
+    const id = parseInt(req.params.id);
+    const filteredTasks = data.tasks.filter(task => task.id !== id);
 
+    if (filteredTasks.length === data.tasks.length) {
+        return res.status(404).json({ error: "Tarea no encontrada" });
+    }
+
+    writeTasks({ tasks: filteredTasks });
+    res.json({ message: "Tarea eliminada" });
+});
 
 
 
